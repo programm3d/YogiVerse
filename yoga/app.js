@@ -1,10 +1,11 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
 const helmet = require("helmet");
 const compression = require("compression");
 const connectDB = require("./config/db");
-require("dotenv").config();
+
 
 // Connect to MongoDB
 connectDB();
