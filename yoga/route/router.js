@@ -20,7 +20,39 @@ router.post("/signup", registerValidator, async (req, res) => {
       .json({ message: "Error creating user", errors: err.message });
   }
 });
+//update user details
+router.put("toUpdatePost/:id",async(req,res,next)=>{
+  const {title,description}=req.body
+  console.log(req.body,req.params.id)
+  let obj={}
+  if(!title && !description){
+    return res.status(500).send("enter a one valid data")
+  }
+  if(title){
+    obj.title=title
+  }
+  if(description){
+    obj.description=description
+  }
+  let id=req.params.id
+  try{
+    id=new mongoose.Types.ObjectId(id)
+  }
+  catch(err){
+    res.status(200).send("invalid id")
+  }
+  try{
+    let post=await postModel.findByIdAndUpdate(id,obj)
+        .then((result)=>{
+          res.status(200).json({"updated":result})
+        })
+  }
+  catch(err){
+    res.status(200).send("error while updating")
+  }
 
+
+})
 // Login Route (Secure Password Check)
 const jwt = require("jsonwebtoken");
 
@@ -258,4 +290,6 @@ let id=req.params.id
   })
   }
 })
+
+
 module.exports = router;

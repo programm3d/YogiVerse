@@ -14,7 +14,7 @@ connectDB();
 app.use(helmet());
 app.use(compression());
 app.use(cors({
-    origin: process.env.CORS_ORIGIN || "*",
+    origin:"*",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true
 }));
