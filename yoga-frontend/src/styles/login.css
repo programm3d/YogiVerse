@@ -1,0 +1,55 @@
+.login {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(255, 178, 0);
+  background: radial-gradient(
+    circle,
+    rgba(255, 178, 0, 1) 0%,
+    rgba(235, 91, 0, 1) 47%,
+    rgba(217, 22, 86, 1) 100%
+  );
+}
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    background-color: #FFB200;
+    padding: 60px;
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+form>h2{
+    color: white;
+    font-size: 32px;
+}
+
+form>input{
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    width: 270px;
+    height: 30px;
+}
+form>button{
+    width: 120px;
+    height: 30px;
+    border: none;
+    border-radius: 8px;
+}
+form>button:hover{
+    cursor: pointer;
+    background-color: #D91656;
+    color: white;
+}
+
+form>div{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
