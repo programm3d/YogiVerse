@@ -14,7 +14,7 @@ connectDB();
 app.use(helmet());
 app.use(compression());
 app.use(cors({
-    origin: process.env.CORS_ORIGIN || "*",
+    origin: process.env.FRONTEND_URL || "https://yogiverse-1.onrender.com",  // Allow frontend
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true
 }));
