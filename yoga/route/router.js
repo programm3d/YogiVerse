@@ -141,6 +141,7 @@ router.get("/feed", async (req, res) => {
           contentLink: 1,
           title: 1,
           description: 1,
+          diffCount:1,
           createdAt: 1,
           username: { $arrayElemAt: ["$userDetails.username", 0] },
           profilePictureLink: { $arrayElemAt: ["$userDetails.profilePic", 0] },
