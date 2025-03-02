@@ -1,32 +1,165 @@
-.navbar{
+/* .navbar {
     display: flex;
     justify-content: space-between;
     padding: 15px 50px;
     align-items: center;
     background-color: #FFB200;
 }
-#logo1{
+
+#logo1 {
     font-size: 28px;
     color: #EB5B00;
 }
-#logo2{
+
+#logo2 {
     font-size: 16px;
     font-weight: bold;
     color: white;
 }
-.nav-items{
-    margin: 0px 10px;
+
+.nav-menu {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-items {
     text-decoration: none;
     color: white;
     font-weight: 500;
     padding: 8px;
     border-radius: 8px;
+    transition: 0.3s ease-in-out;
 }
-.nav-items:hover{
+
+.nav-items:hover,
+.active {
     background-color: white;
     color: #FFB200;
 }
-.active{
+
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px 20px;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+
+    #logo1 {
+        font-size: 24px;
+    }
+
+    #logo2 {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .navbar {
+        padding: 10px;
+    }
+
+    #logo1 {
+        font-size: 20px;
+    }
+
+    #logo2 {
+        font-size: 12px;
+    }
+
+    .nav-items {
+        font-size: 14px;
+        padding: 6px;
+    }
+} */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 50px;
+    align-items: center;
+    background-color: #FFB200;
+    transition: background-color 0.3s ease-in-out, padding 0.3s ease-in-out;
+}
+
+#logo1 {
+    font-size: 28px;
+    color: #EB5B00;
+    transition: font-size 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+#logo2 {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    transition: font-size 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 10px;
+    transition: gap 0.3s ease-in-out;
+}
+
+.nav-items {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.nav-items:hover,
+.active {
     background-color: white;
     color: #FFB200;
+    transform: scale(1.05);
 }
+
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px 20px;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+
+    #logo1 {
+        font-size: 24px;
+    }
+
+    #logo2 {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .navbar {
+        padding: 10px;
+    }
+
+    #logo1 {
+        font-size: 20px;
+    }
+
+    #logo2 {
+        font-size: 12px;
+    }
+
+    .nav-items {
+        font-size: 14px;
+        padding: 6px;
+    }
+}
+
