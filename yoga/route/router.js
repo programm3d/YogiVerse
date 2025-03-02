@@ -61,17 +61,15 @@ const authMiddleware = require("../middleware/auth");
 // 🔒 Protect Video Upload Route
 router.post(
   "/postVideo",
-  authMiddleware,
+
   validateVideoUpload,
   async (req, res) => {
     try {
-      const post = await postModel.create({
-        ...req.obj,
-        userId: req.user.userId, // Use the logged-in user's ID
-      });
 
-      await userModel.findByIdAndUpdate(req.user.userId, {
-        $push: { posts: post._id },
+      const post = await postModel.create(req.obj)
+
+      await userModel.findByIdAndUpdate(req.obj.userId, {
+        $push: { posts: post["_id"]},
       });
 
       res
@@ -82,23 +80,33 @@ router.post(
         .status(500)
         .json({ message: "Error creating video", errors: err.message });
     }
+
   }
+
 );
 
 // 🔒 Protect Delete Video Route
-router.delete("/deletevideo/:id", authMiddleware, async (req, res) => {
+router.delete("/deletevideo/:id", async (req, res) => {
+  let id=req.params.id;
+  try{
+
+    id=new mongoose.Types.ObjectId(id);
+  }
+  catch(err){
+    res.status(500).json({
+      message: "Error deleting video",
+    })
+  }
+
   try {
-    const post = await postModel.findById(req.params.id);
+    const post = await postModel.findById(id);
     if (!post) return res.status(404).json({ message: "Post not found" });
 
-    if (post.userId.toString() !== req.user.userId) {
-      return res
-        .status(403)
-        .json({ error: "Unauthorized to delete this video" });
-    }
 
-    await postModel.findByIdAndDelete(req.params.id);
-    await userModel.findByIdAndUpdate(post.userId, {
+
+    await postModel.findByIdAndDelete(id);
+    let PostUserid=new mongoose.Types.ObjectId(post.userId);
+    await userModel.findByIdAndUpdate(PostUserid, {
       $pull: { posts: post._id },
     });
 
@@ -222,4 +230,31 @@ router.get("/lead", async (req, res) => {
   }
 });
 
+//newly added api to increase difficulty count and to increase people who find easier
+//give post id
+router.patch("/increaseCount/:id/difficult", async (req, res) => {
+let id=req.params.id
+  try{
+  id=new mongoose.Types.ObjectId(id);
+  }
+  catch(err){
+  return res.status(500).json({
+    "message": "error while updating increaseCount",
+  })
+  }
+  try{
+  let post=postModel.findByIdAndUpdate(id, {
+        $inc: {diffCount: 1}
+      }
+  ).then(result=>{
+    res.status(200).json(result);
+  })
+  }
+
+  catch(err){
+  res.status(500).json({
+    "message": "error while updating increaseCount",
+  })
+  }
+})
 module.exports = router;

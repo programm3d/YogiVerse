@@ -24,7 +24,10 @@ const postSchema = new Schema({
     createdAt: { type: Date, default: Date.now },
     title: { type: String },
     description: { type: String },
-    difficultyLevel: String
+    difficultyLevel: String,
+    diffCount: { type:Number,
+    default:0},
+
 });
 
 const userModel = model("user", userSchema);

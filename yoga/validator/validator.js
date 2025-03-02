@@ -23,7 +23,7 @@ async function registerValidator(req, res, next) {
 }
 
 function validateVideoUpload(req, res, next) {
-    let { title,description,contentLink,userId,difficultyLevel} = req.body;
+    let { title,description,contentLink,userId,difficultyLevel,easyCount} = req.body;
 
     if (!title || !description || !contentLink || !userId || difficultyLevel === undefined) {
         return res.status(400).json({ error: "Please fill all fields" });
@@ -46,9 +46,10 @@ function validateVideoUpload(req, res, next) {
     req.obj = {
         title: title.trim(),
         description: description.trim(),
-        userId,
+        userId:userId,
         contentLink: contentLink.trim(),
         difficultyLevel: parseInt(difficultyLevel),
+
     };
 
     next();
