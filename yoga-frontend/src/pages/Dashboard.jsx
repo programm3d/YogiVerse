@@ -3,6 +3,8 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import '../styles/dash.css'
+import { Trash2 } from "lucide-react";
+import { Pencil } from "lucide-react";
 
 const Dashboard = () => {
   const { user, signout } = useAuth();
@@ -24,7 +26,7 @@ const Dashboard = () => {
         `https://yogiverse.onrender.com/yoga/userPosted/${user.userId}`
       );
       const data = await response.json();
-      console.log(user);
+      console.log(data);
       setPosts(data);
     } catch (err) {
       console.error("Error fetching posts", err);
@@ -65,6 +67,10 @@ const Dashboard = () => {
     navigate("/post");
   };
 
+  if (posts.length === 0) {
+    return <h1 className="loader">Loading....</h1>;
+  }
+
   return (
     <>
       <Navbar />
@@ -83,8 +89,8 @@ const Dashboard = () => {
               <video src={contentLink}></video>
               <p>{description}</p>
               <p>Difficulty: {difficultyLevel}</p>
-              <button onClick={(e) => handleDelete(e, _id)}>Delete Post</button>
-              <button onClick={(e) => handleEdit(e, _id)}>Edit Post</button>
+              <Trash2 onClick={(e) => handleDelete(e, _id)} className="del-btn" />
+              <Pencil  onClick={(e) => handleEdit(e, _id)} className="edit-btn"/>
             </div>
           )
         )}

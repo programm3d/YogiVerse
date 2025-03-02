@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { ArrowBigUp } from "lucide-react";
 import Navbar from "./Navbar";
-import '../styles/feed.css'
+import "../styles/feed.css";
+import axios from "axios";
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
+  const [diff, setDiff] = useState({});
 
   const fetchFeed = async () => {
     try {
@@ -19,6 +22,32 @@ const Feed = () => {
     fetchFeed();
   }, []);
 
+  const handleDiff = (e, id) => {
+    if (!diff[id]) {
+      setDiff({ ...diff, [id]: true });
+      axios
+        .patch(
+          `https://yogiverse.onrender.com/yoga/increaseCount/${id}/difficult`
+        )
+        .then((response) => {
+          setPosts((prevPosts) =>
+            prevPosts.map((post) =>
+              post._id === id
+                ? { ...post, diffCount: post.diffCount + 1 }
+                : post
+            )
+          );
+        })
+        .catch((err) => {
+          console.error("Error updating diff count", err);
+        });
+    }
+  };
+
+  if (posts.length === 0) {
+    return <h1 className="loader">Loading....</h1>;
+  }
+
   return (
     <>
       <Navbar />
@@ -30,6 +59,7 @@ const Feed = () => {
             title,
             description,
             createdAt,
+            diffCount,
             username,
             profilePictureLink,
           }) => (
@@ -41,6 +71,13 @@ const Feed = () => {
               <video src={contentLink} controls></video>
               <p>{description}</p>
               <p>{new Date(createdAt).toLocaleString()}</p>
+              <div className="diffcount">
+                <ArrowBigUp
+                  className={`diff-icon ${diff[_id] ? "actived" : ""}`}
+                  onClick={(e) => handleDiff(e, _id)}
+                />
+                <span className="diff-count">{diffCount || 0}</span>
+              </div>
             </div>
           )
         )}
