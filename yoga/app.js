@@ -27,6 +27,19 @@ app.use(express.urlencoded({ extended: true }));
 const router = require("./route/router");
 app.use("/yoga", router);
 
+const path = require("path");
+
+// Serve frontend in production
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "../yoga-frontend/dist")));
+
+    // Handle React Router Routes
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, "../yoga-frontend/dist", "index.html"));
+    });
+}
+
+
 // Start Server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
