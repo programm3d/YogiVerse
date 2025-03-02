@@ -1,0 +1,49 @@
+h1 {
+  text-align: center;
+}
+.dash {
+  background: rgb(255, 178, 0);
+  background: radial-gradient(
+    circle,
+    rgba(255, 178, 0, 1) 0%,
+    rgba(235, 91, 0, 1) 47%,
+    rgba(217, 22, 86, 1) 100%
+  );
+  margin: auto;
+  padding: 20px;
+}
+.welcome{
+ display: flex;
+ justify-content: space-around;
+ align-items: center;
+ color: white;
+ font-weight: 500;
+}
+.welcome>button{
+    padding: 10px;
+    border: 1px solid transparent;
+    font-weight: bold;
+    border-radius: 8px;
+}
+.welcome>button:hover{
+    cursor: pointer;
+    background-color: #D91656;
+    border: 1px solid #FFB200;
+    color: white;
+    font-weight: bold;
+}
+.userPosts{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    justify-items: center ;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    margin: 20px 0px;
+}
+.poster{
+    padding: 20px;
+    background-color: #FFB200;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
