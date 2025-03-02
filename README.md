@@ -71,8 +71,9 @@ We welcome contributions! If you'd like to contribute, please fork the repositor
 - Masai School for organizing the Masai x10x Hackathon.
 - Our mentors and peers for their support and guidance.
 
-## Contact
-For any inquiries or feedback, please reach out to us at [your-email@example.com].
+## Live On:
+[Server](https://yogiverse.onrender.com/yoga)
+[Client](https://yogiverse-1.onrender.com)
 
 ---
 
