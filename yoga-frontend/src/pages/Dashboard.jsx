@@ -34,8 +34,10 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    fetchPosts();
-  }, []);
+    if (user && user.userId) {
+      fetchPosts();
+    }
+  }, [user]);
 
   const handleDelete = async (e, id) => {
     e.preventDefault();
