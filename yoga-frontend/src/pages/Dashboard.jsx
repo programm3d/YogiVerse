@@ -16,9 +16,6 @@ const Dashboard = () => {
     navigate("/login");
   };
 
-  if (!user) {
-    return <div>Loading...</div>;
-  }
 
   const fetchPosts = async () => {
     try {
@@ -68,10 +65,6 @@ const Dashboard = () => {
   const handlePost = () => {
     navigate("/post");
   };
-
-  if (posts.length === 0) {
-    return <h1 className="loader">Loading....</h1>;
-  }
 
   return (
     <>
