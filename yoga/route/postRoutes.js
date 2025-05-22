@@ -21,7 +21,7 @@ router.get('/', getAllPosts);
 router.get('/search', authenticateToken, searchByTag);
 
 // Video upload endpoint
-router.post('/upload-video', uploadLimiter, authenticateToken, videoUpload.single('video'), uploadVideo);
+router.post('/upload-video', authenticateToken, videoUpload.single('video'), uploadVideo);
 
 // User routes (authenticated)
 router.post('/', createPostLimiter, authenticateToken, videoUpload.single('video'), createPost);
