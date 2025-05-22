@@ -1,22 +1,28 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.JWT_SECRET;
 
-function authMiddleware(req, res, next) {
-  const token = req.header("Authorization");
-console.log(token)
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
   if (!token) {
-    return res.status(401).json({ error: "Access Denied! No token provided" });
+    return res.status(401).json({ message: 'Access token missing' });
   }
 
-  try {
-    const decoded = jwt.verify(
-      token.replace("Bearer ", ""),
-      process.env.JWT_SECRET
-    );
-    req.user = decoded; // Attach user info to the request
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.status(403).json({ message: 'Invalid or expired token' });
+    }
+    req.user = user;
     next();
-  } catch (err) {
-    res.status(401).json({ error: "Invalid or Expired Token" });
-  }
+  });
 }
 
-module.exports = authMiddleware;
+function isAdmin(req, res, next) {
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ message: 'Admin access required' });
+  }
+  next();
+}
+
+module.exports = { authenticateToken, isAdmin };
