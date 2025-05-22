@@ -23,3 +23,22 @@
   background-color: #eb5b00;
   color: white;
 }
+
+.diffcount{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.diff-icon:hover{
+  color: rgba(248, 128, 232, 0.61);
+  cursor: pointer;
+}
+.diff-icon:active{
+  color: #D91656;
+}
+
+.actived{
+ color: #640D5F;
+ background-color: transparent;
+}

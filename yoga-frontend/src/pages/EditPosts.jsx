@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const EditPost = () => {
   const location = useLocation();
   const { post } = location.state;
+  const { id } = useParams(); // Get the post ID from URL parameters
   const [editPostData, setEditPostData] = useState({
     title: post.title,
     description: post.description,
-    contentLink: post.contentLink,
   });
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -18,9 +20,22 @@ const EditPost = () => {
     }));
   };
 
-  const handleEditSubmit = (e) => {
+  const handleEditSubmit = async (e) => {
     e.preventDefault();
-    // Add your submit logic here
+    try {
+      const response = await axios.put(
+        `https://yogiverse.onrender.com/yoga/updatePost/${id}`,
+        editPostData
+      );
+      console.log("Post updated successfully:", response.data);
+      // Redirect or update UI after successful update
+      navigate('/dashboard')
+    } catch (error) {
+      console.error(
+        "Error updating post:",
+        error.response ? error.response.data : error.message
+      );
+    }
   };
 
   return (
@@ -40,13 +55,6 @@ const EditPost = () => {
           value={editPostData.description}
           onChange={handleInputChange}
           placeholder="Description"
-        />
-        <input
-          type="text"
-          name="contentLink"
-          value={editPostData.contentLink}
-          onChange={handleInputChange}
-          placeholder="Content Link"
         />
         <button type="submit">Save Changes</button>
       </form>
