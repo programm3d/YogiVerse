@@ -916,6 +916,16 @@
 
 
 
+//to get like count of particular post 
+ GET /api/post/likeCount/:id
+{
+"likeCount": [
+{
+"_id": "6845a711fca1704ef70e5e47",
+"likesCount": 1
+}
+]
+}
 
 
 
