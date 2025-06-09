@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YogaFlow - Share Your Journey</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --dark-bg: #1a1a1a;
+            --card-bg: #ffffff;
+            --text-primary: #2d3748;
+            --text-secondary: #718096;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0,0,0,0.1);
+            --shadow-hover: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+        }
+
+        .navbar {
+            background: var(--card-bg) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            border: none;
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--text-primary) !important;
+            transition: all 0.3s ease;
+            border-radius: 20px;
+            padding: 0.5rem 1rem !important;
+            margin: 0 0.2rem;
+        }
+
+        .nav-link:hover {
+            background: var(--primary-gradient);
+            color: white !important;
+        }
+
+        .btn-gradient {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            font-weight: 500;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+            color: white;
+        }
+
+        .btn-secondary-gradient {
+            background: var(--secondary-gradient);
+            border: none;
+            color: white;
+            font-weight: 500;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+            color: white;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            background: var(--card-bg);
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-header {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 1.5rem;
+            font-weight: 600;
+        }
+
+        .form-control {
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+            font-weight: 400;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+
+        .hero-section {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="white" stop-opacity="0.1"/><stop offset="100%" stop-color="white" stop-opacity="0"/></radialGradient></defs><circle cx="10" cy="10" r="10" fill="url(%23a)"/><circle cx="50" cy="15" r="8" fill="url(%23a)"/><circle cx="90" cy="5" r="12" fill="url(%23a)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .post-card {
+            margin-bottom: 2rem;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .post-header {
+            padding: 1.5rem;
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .post-content {
+            padding: 1.5rem;
+            background: white;
+        }
+
+        .post-actions {
+            padding: 1rem 1.5rem;
+            background: #f8f9fa;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--border-color);
+        }
+
+        .comment-item {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            background: white;
+        }
+
+        .comment-item:last-child {
+            border-bottom: none;
+        }
+
+        .tag {
+            background: var(--accent-gradient);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-block;
+            margin: 0.2rem;
+        }
+
+        .difficulty-badge {
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .difficulty-beginner {
+            background: var(--success-gradient);
+            color: white;
+        }
+
+        .difficulty-intermediate {
+            background: var(--secondary-gradient);
+            color: white;
+        }
+
+        .difficulty-advanced {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+        }
+
+        .floating-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow-hover);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+            color: white;
+        }
+
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .search-container {
+            background: white;
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            box-shadow: var(--shadow);
+            margin: 2rem 0;
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            padding: 0.5rem 1rem;
+            width: 100%;
+            background: transparent;
+        }
+
+        .alert {
+            border: none;
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .alert-success {
+            background: var(--success-gradient);
+            color: white;
+        }
+
+        .alert-danger {
+            background: var(--secondary-gradient);
+            color: white;
+        }
+
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .like-btn {
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .like-btn.liked {
+            color: #e53e3e;
+        }
+
+        .pagination {
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .page-link {
+            border: none;
+            color: var(--text-primary);
+            background: white;
+            margin: 0 0.2rem;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .page-link:hover {
+            background: var(--primary-gradient);
+            color: white;
+        }
+
+        .page-item.active .page-link {
+            background: var(--primary-gradient);
+            border-color: transparent;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 2rem 0;
+            }
+
+            .floating-btn {
+                bottom: 1rem;
+                right: 1rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .card {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#"><i class="fas fa-leaf me-2"></i>YogaFlow</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="showSection('home')"><i class="fas fa-home me-1"></i>Home</a>
+                </li>
+                <li class="nav-item" id="profileNavItem" style="display: none;">
+                    <a class="nav-link" href="#" onclick="showSection('profile')"><i class="fas fa-user me-1"></i>Profile</a>
+                </li>
+                <li class="nav-item" id="myPostsNavItem" style="display: none;">
+                    <a class="nav-link" href="#" onclick="showSection('myPosts')"><i class="fas fa-video me-1"></i>My Posts</a>
+                </li>
+            </ul>
+            <div class="navbar-nav">
+                <div id="authButtons">
+                    <button class="btn btn-gradient me-2" onclick="showSection('login')">Login</button>
+                    <button class="btn btn-secondary-gradient" onclick="showSection('register')">Sign Up</button>
+                </div>
+                <div id="userMenu" style="display: none;">
+                    <img id="navProfilePic" class="profile-pic me-2" src="" alt="Profile">
+                    <span id="navUsername" class="me-3"></span>
+                    <button class="btn btn-outline-danger btn-sm" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container-fluid" style="margin-top: 80px;">
+    <!-- Alert Container -->
+    <div id="alertContainer"></div>
+
+    <!-- Home Section -->
+    <div id="home" class="page-section active">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="display-4 fw-bold mb-4">Share Your Yoga Journey</h1>
+                    <p class="lead mb-4">Connect with fellow yogis, share your practice videos, and grow together in mindfulness</p>
+                    <div class="search-container d-inline-block">
+                        <div class="d-flex align-items-center">
+                            <input type="text" id="searchInput" class="search-input" placeholder="Search yoga videos...">
+                            <button class="btn btn-link text-primary" onclick="searchPosts()">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Posts Feed -->
+        <div class="container my-5">
+            <div class="row">
+                <div class="col-12">
+                    <div id="postsContainer">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            <p class="mt-3">Loading posts...</p>
+                        </div>
+                    </div>
+                    <div id="pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Section -->
+    <div id="login" class="page-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <h4><i class="fas fa-sign-in-alt me-2"></i>Welcome Back</h4>
+                        </div>
+                        <div class="card-body p-4">
+                            <form id="loginForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="loginEmail" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="loginPassword" required>
+                                </div>
+                                <button type="submit" class="btn btn-gradient w-100 mb-3">Login</button>
+                            </form>
+                            <div class="text-center">
+                                <a href="#" onclick="showSection('forgotPassword')" class="text-decoration-none">Forgot Password?</a>
+                            </div>
+                            <div class="text-center mt-3">
+                                <span>Don't have an account? </span>
+                                <a href="#" onclick="showSection('register')" class="text-decoration-none fw-bold">Sign Up</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Section -->
+    <div id="register" class="page-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <h4><i class="fas fa-user-plus me-2"></i>Join YogaFlow</h4>
+                        </div>
+                        <div class="card-body p-4">
+                            <form id="requestOtpForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="registerEmail" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="registerUsername" required>
+                                </div>
+                                <button type="submit" class="btn btn-gradient w-100">Send OTP</button>
+                            </form>
+
+                            <form id="registerForm" style="display: none;">
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="registerPassword" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">OTP</label>
+                                    <input type="text" class="form-control" id="registerOtp" required>
+                                </div>
+                                <button type="submit" class="btn btn-gradient w-100">Complete Registration</button>
+                            </form>
+
+                            <div class="text-center mt-3">
+                                <span>Already have an account? </span>
+                                <a href="#" onclick="showSection('login')" class="text-decoration-none fw-bold">Login</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Section -->
+    <div id="forgotPassword" class="page-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <h4><i class="fas fa-key me-2"></i>Reset Password</h4>
+                        </div>
+                        <div class="card-body p-4">
+                            <form id="requestResetOtpForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="resetEmail" required>
+                                </div>
+                                <button type="submit" class="btn btn-gradient w-100">Send Reset OTP</button>
+                            </form>
+
+                            <form id="resetPasswordForm" style="display: none;">
+                                <div class="mb-3">
+                                    <label class="form-label">New Password</label>
+                                    <input type="password" class="form-control" id="newPassword" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">OTP</label>
+                                    <input type="text" class="form-control" id="resetOtp" required>
+                                </div>
+                                <button type="submit" class="btn btn-gradient w-100">Reset Password</button>
+                            </form>
+
+                            <div class="text-center mt-3">
+                                <a href="#" onclick="showSection('login')" class="text-decoration-none">Back to Login</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Section -->
+    <div id="profile" class="page-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <h4><i class="fas fa-user-edit me-2"></i>My Profile</h4>
+                        </div>
+                        <div class="card-body p-4">
+                            <div id="profileInfo" class="text-center mb-4">
+                                <img id="profilePicDisplay" class="profile-pic mb-3" style="width: 100px; height: 100px;" src="" alt="Profile">
+                                <h5 id="profileUsername"></h5>
+                                <p id="profileEmail" class="text-muted"></p>
+                            </div>
+
+                            <form id="updateProfileForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="profileName">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Profile Picture</label>
+                                    <input type="file" class="form-control" id="profilePicInput" accept="image/*">
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-gradient flex-fill">Update Profile</button>
+                                    <button type="button" class="btn btn-outline-danger" onclick="removeProfilePic()">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- My Posts Section -->
+    <div id="myPosts" class="page-section">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="fas fa-video me-2"></i>My Posts</h2>
+                <button class="btn btn-gradient" onclick="showCreatePostModal()">
+                    <i class="fas fa-plus me-2"></i>Create Post
+                </button>
+            </div>
+            <div id="myPostsContainer">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p class="mt-3">Loading your posts...</p>
+                </div>
+            </div>
+            <div id="myPostsPagination"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Floating Action Button -->
+<button class="floating-btn d-none" id="createPostBtn" onclick="showCreatePostModal()">
+    <i class="fas fa-plus"></i>
+</button>
+
+<!-- Create/Edit Post Modal -->
+<div class="modal fade" id="postModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="postModalTitle">Create New Post</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="postForm">
+                    <input type="hidden" id="postId">
+                    <div class="mb-3">
+                        <label class="form-label">Title *</label>
+                        <input type="text" class="form-control" id="postTitle" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" id="postDescription" rows="4"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tags (comma separated)</label>
+                        <input type="text" class="form-control" id="postTags" placeholder="yoga, meditation, flexibility">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Difficulty Level</label>
+                        <select class="form-select" id="postDifficulty">
+                            <option value="">Select difficulty</option>
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                    </div>
+                    <div class="mb-3" id="videoUploadSection">
+                        <label class="form-label">Video</label>
+                        <input type="file" class="form-control" id="postVideo" accept="video/*">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-gradient">Save Post</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Post Details Modal -->
+<div class="modal fade" id="postDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="postDetailsTitle"></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="postDetailsContent"></div>
+
+                <!-- Comments Section -->
+                <div class="mt-4">
+                    <h6><i class="fas fa-comments me-2"></i>Comments</h6>
+                    <form id="commentForm" class="mb-3" style="display: none;">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="commentText" placeholder="Add a comment...">
+                            <button type="submit" class="btn btn-gradient">Post</button>
+                        </div>
+                    </form>
+                    <div id="commentsContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Report Modal -->
+<div class="modal fade" id="reportModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Report Post</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="reportForm">
+                    <input type="hidden" id="reportPostId">
+                    <div class="mb-3">
+                        <label class="form-label">Reason for reporting</label>
+                        <textarea class="form-control" id="reportDescription" rows="4" required placeholder="Please describe why you're reporting this post..."></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">Submit Report</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Global variables
+    let currentUser = null;
+    let currentPage = 1;
+    let currentSearchTerm = '';
+    let currentPostId = null;
+    const API_BASE = 'http://localhost:5000/api'
+
+    // Initialize the app
+    document.addEventListener('DOMContentLoaded', function() {
+        checkAuthStatus();
+        loadPosts();
+        setupEventListeners();
+    });
+
+    // Setup event listeners
+    function setupEventListeners() {
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchPosts();
+            }
+        });
+
+        // Form submissions
+        document.getElementById('loginForm').addEventListener('submit', handleLogin);
+        document.getElementById('requestOtpForm').addEventListener('submit', handleRequestOtp);
+        document.getElementById('registerForm').addEventListener('submit', handleRegister);
+        document.getElementById('requestResetOtpForm').addEventListener('submit', handleRequestResetOtp);
+        document.getElementById('resetPasswordForm').addEventListener('submit', handleResetPassword);
+        document.getElementById('updateProfileForm').addEventListener('submit', handleUpdateProfile);
+        document.getElementById('postForm').addEventListener('submit', handleCreatePost);
+        document.getElementById('commentForm').addEventListener('submit', handleAddComment);
+        document.getElementById('reportForm').addEventListener('submit', handleReportPost);
+    }
+
+    // Utility functions
+    function showAlert(message, type = 'success') {
+        const alertContainer = document.getElementById('alertContainer');
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+        alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+        alertContainer.appendChild(alertDiv);
+
+        setTimeout(() => {
+            if (alertDiv.parentNode) {
+                alertDiv.parentNode.removeChild(alertDiv);
+            }
+        }, 5000);
+    }
+
+    function showSection(sectionName) {
+        // Hide all sections
+        document.querySelectorAll('.page-section').forEach(section => {
+            section.classList.remove('active');
+        });
+
+        // Show selected section
+        document.getElementById(sectionName).classList.add('active');
+
+        // Load section-specific data
+        if (sectionName === 'profile' && currentUser) {
+            loadProfile();
+        } else if (sectionName === 'myPosts' && currentUser) {
+            loadMyPosts();
+        } else if (sectionName === 'home') {
+            loadPosts();
+        }
+    }
+
+    // API utility function
+    async function apiCall(endpoint, options = {}) {
+        try {
+            const response = await fetch(`${API_BASE}${endpoint}`, {
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...options.headers
+                },
+                ...options
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'An error occurred');
+            }
+
+            return data;
+        } catch (error) {
+            console.error('API Error:', error);
+            throw error;
+        }
+    }
+
+    // Authentication functions
+    async function checkAuthStatus() {
+        try {
+            const data = await apiCall('/user/profile');
+            if (data.success) {
+                currentUser = data.user;
+                updateAuthUI();
+            }
+        } catch (error) {
+            // User not logged in
+            currentUser = null;
+            updateAuthUI();
+        }
+    }
+
+    function updateAuthUI() {
+        const authButtons = document.getElementById('authButtons');
+        const userMenu = document.getElementById('userMenu');
+        const profileNavItem = document.getElementById('profileNavItem');
+        const myPostsNavItem = document.getElementById('myPostsNavItem');
+        const createPostBtn = document.getElementById('createPostBtn');
+
+        if (currentUser) {
+            authButtons.style.display = 'none';
+            userMenu.style.display = 'flex';
+            profileNavItem.style.display = 'block';
+            myPostsNavItem.style.display = 'block';
+            createPostBtn.classList.remove('d-none');
+
+            document.getElementById('navUsername').textContent = currentUser.username;
+            document.getElementById('navProfilePic').src = currentUser.profilePic || 'https://via.placeholder.com/50';
+        } else {
+            authButtons.style.display = 'flex';
+            userMenu.style.display = 'none';
+            profileNavItem.style.display = 'none';
+            myPostsNavItem.style.display = 'none';
+            createPostBtn.classList.add('d-none');
+        }
+    }
+
+    async function handleLogin(e) {
+        e.preventDefault();
+        try {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            const data = await apiCall('/auth/login', {
+                method: 'POST',
+                body: JSON.stringify({ email, password })
+            });
+
+            if (data.success) {
+                currentUser = data.user;
+                updateAuthUI();
+                showAlert('Login successful!');
+                showSection('home');
+            }
+        } catch (error) {
+            showAlert(error.message, 'danger');
+        }
+    }
+
+    async function handleRequestOtp(e) {
+        e.preventDefault();
+        try {
+            const email = document.getElementById('registerEmail').value;
+            const username = document.getElementById('registerUsername').value;
+
+            await apiCall('/auth/request-otp', {
+                method: 'POST',
+                body: JSON.stringify({ email, username })
+            });
+
+            showAlert('OTP sent to your email!');
+            document.getElementById('requestOtpForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+        } catch (error) {
+            showAlert(error.message, 'danger');
+        }
+    }
+
+    async function handleRegister(e) {
+        e.preventDefault();
+        try {
+            const email = document.getElementById('registerEmail').value;
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+            const otp = document.getElementById('registerOtp').value;
+
+            const data = await apiCall('/auth/register', {
+                method: 'POST',
+                body: JSON.stringify({ email, username, password, otp })
+            });
+
+            if (data.success) {
+                currentUser = data.user;
+                updateAuthUI();
+                showAlert('Registration successful!');
+                showSection('home');
+            }
+        } catch (error) {
+            showAlert(error.message, 'danger');
+        }
+    }
+
+    async function handleRequestResetOtp(e) {
+        e.preventDefault();
+        try {
+            const email = document.getElementById('resetEmail').value;
+
+            await apiCall('/auth/request-reset-otp', {
+                method: 'POST',
+                body: JSON.stringify({ email })
+            });
+
+            showAlert('Reset OTP sent to your email!');
+            document.getElementById('requestResetOtpForm').style.display = 'none';
+            document.getElementById('resetPasswordForm').style.display = 'block';
+        } catch (error) {
+            showAlert(error.message, 'danger');
+        }
+    }
+
+    async function handleResetPassword(e) {
+        e.preventDefault();
+        try {
+            const email = document.getElementById('resetEmail').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const otp = document.getElementById('resetOtp').value;
+
+            await apiCall('/auth/reset-password', {
+                method: 'POST',
+                body: JSON.stringify({ email, newPassword, otp })
+            });
+
+            showAlert('Password reset successful!');
+            showSection('login');
+        } catch (error) {
+            showAlert(error.message, 'danger');
+        }
+    }
+
+    async function logout() {
+        try {
+            await apiCall('/auth/logout');
+            currentUser = null;
+            updateAuthUI();
+            showAlert('Logged out successfully!');
+            showSection('home');
+        } catch (error) {
+            showAlert(error.message, 'danger');
+        }
+    }
+
+    // Profile functions
+    async function loadProfile() {
+        try {
+            const data = await apiCall('/user/profile');
+            if (data.success) {
+                const user = data.user;
+                document.getElementById('profileUsername').textContent = user.username;
+                document.getElementById('profileEmail').textContent = user.email;
+                document.getElementById('profileName').value = user.name || '';
+                document.getElementById('profilePicDisplay').src = user.profilePic || 'https://via.placeholder.com/100';
+            }
+        } catch (error) {
+            showAlert(error.message, 'danger');
+        }
+    }
+
+    async function handleUpdateProfile(e) {
+        e.preventDefault();
+        try {
+            const formData = new FormData();
+            const name = document.getElementById('profileName').value;
+            const profilePicFile = document.getElementById('profilePicInput').files[0];
+
+            if (name) formData.append('name', name);
+            if (profilePicFile) formData.append('profilePic', profilePicFile);
+
+            const response = await fetch(`${API_BASE}/user/profile`, {
+                method: 'PATCH',
+                credentials: 'include',
+                body: formData
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                currentUser = data.user;
+                updateAuthUI();
+                loadProfile();
+                showAlert('Profile updated successfully!');
+            } else {
+                throw new Error(data.message);
+            }
+        } catch (error) {
+            showAlert(error.message, 'danger');
+        }
+    }
+
+    async function removeProfilePic() {
+        try {
+            await apiCall('/user/profile/pic', { method: 'DELETE' });
+            showAlert('Profile picture removed!');
+            loadProfile();
+        } catch (error) {
+            showAlert(error.message, 'danger');
+        }
+    }
+
+    // Posts functions
+    async function loadPosts(page = 1, search = '') {
+        try {
+            currentPage = page;
+            currentSearchTerm = search;
+
+            let endpoint = `/post/feed/all?page=${page}&limit=10`;
+            if (search) {
+                endpoint = `/post/search/all?search=${encodeURIComponent(search)}&page=${page}&limit=10`;
+            }
+
+            const data = await apiCall(endpoint);
+            displayPosts(data.posts || [], 'postsContainer');
+            createPagination(data.totalPages || 1, page, 'pagination', () => loadPosts);
+        } catch (error) {
+            document.getElementById('postsContainer').innerHTML = `
+                    <div class="text-center">
+                        <p class="text-muted">Error loading posts: ${error.message}</p>
+                    </div>
+                `;
+        }
+    }
+
+    async function loadMyPosts(page = 1) {
+        try {
+            const data = await apiCall(`/post/user/${currentUser._id}?page=${page}&limit=10`);
+            displayPosts(data.posts || [], 'myPostsContainer');
+            createPagination(data.totalPages || 1, page, 'myPostsPagination', () => loadMyPosts);
+        } catch (error) {
+            document.getElementById('myPostsContainer').innerHTML = `
+                    <div class="text-center">
+                        <p class="text-muted">Error loading posts: ${error.message}</p>
+                    </div>
+                `;
+        }
+    }
+
+    function displayPosts(posts, containerId) {
+        const container = document.getElementById(containerId);
+
+        if (posts.length === 0) {
+            container.innerHTML = `
+                    <div class="text-center py-5">
+                        <i class="fas fa-video fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">No posts found</h5>
+                        <p class="text-muted">Be the first to share your yoga journey!</p>
+                    </div>
+                `;
+            return;
+        }
+
+        container.innerHTML = posts.map(post => {
+            const tags = Array.isArray(post.tags) ? post.tags : [];
+            const isOwner = currentUser && currentUser._id === (post.userId._id || post.userId);
+
+            return `
+                    <div class="post-card card">
+                        <div class="post-header">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <img src="${post.userId.profilePic || 'https://via.placeholder.com/50'}"
+                                         class="profile-pic me-3" alt="Profile">
+                                    <div>
+                                        <h6 class="mb-0">${post.userId.username || 'Anonymous'}</h6>
+                                        <small class="text-muted">${new Date(post.createdAt).toLocaleDateString()}</small>
+                                    </div>
+                                </div>
+                                <div class="dropdown">
+                                    <button class="btn btn-link text-muted" data-bs-toggle="dropdown">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        ${isOwner ? `
+                                            <li><a class="dropdown-item" href="#" onclick="editPost('${post._id}')">
+                                                <i class="fas fa-edit me-2"></i>Edit
+                                            </a></li>
+                                            <li><a class="dropdown-item text-danger" href="#" onclick="deletePost('${post._id}')">
+                                                <i class="fas fa-trash me-2"></i>Delete
+                                            </a></li>
+                                        ` : `
+                                            <li><a class="dropdown-item" href="#" onclick="reportPost('${post._id}')">
+                                                <i class="fas fa-flag me-2"></i>Report
+                                            </a></li>
+                                        `}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <h5 class="mb-3">${post.title}</h5>
+                            ${post.description ? `<p class="text-muted mb-3">${post.description}</p>` : ''}
+
+                            ${post.contentLink ? `
+                                <div class="video-container mb-3">
+                                    <video controls poster="">
+                                        <source src="${post.contentLink}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                            ` : ''}
+
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                ${tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                                ${post.difficultyLevel ? `
+                                    <span class="difficulty-badge difficulty-${post.difficultyLevel}">
+                                        ${post.difficultyLevel}
+                                    </span>
+                                ` : ''}
+                            </div>
+                        </div>
+                        <div class="post-actions">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <button class="btn btn-link p-0 like-btn ${post.isLiked ? 'liked' : ''}"
+                                            onclick="toggleLike('${post._id}', this)">
+                                        <i class="fas fa-heart me-1"></i>
+                                        <span>${post.likes || 0}</span>
+                                    </button>
+                                    <button class="btn btn-link p-0" onclick="viewPost('${post._id}')">
+                                        <i class="fas fa-comment me-1"></i>
+                                        Comments
+                                    </button>
+                                </div>
+                                <button class="btn btn-gradient btn-sm" onclick="viewPost('${post._id}')">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+        }).join('');
+    }
+
+    function createPagination(totalPages, currentPage, containerId, loadFunction) {
+        const container = document.getElementById(containerId);
+
+        if (totalPages <= 1) {
+            container.innerHTML = '';
+            return;
+        }
+
+        let paginationHTML = '<nav><ul class="pagination">';
+
+        // Previous button
+        if (currentPage > 1) {
+            paginationHTML += `
+                    <li class="page-item">
+                        <a class="page-link" href="#" onclick="${loadFunction.name}(${currentPage - 1}, '${currentSearchTerm}')">Previous</a>
+                    </li>
+                `;
+        }
+
+        // Page numbers
+        for (let i = 1; i <= totalPages; i++) {
+            if (i === currentPage) {
+                paginationHTML += `<li class="page-item active"><span class="page-link">${i}</span></li>`;
+            } else if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                paginationHTML += `
+                        <li class="page-item">
+                            <a class="page-link" href="#" onclick="${loadFunction.name}(${i}, '${currentSearchTerm}')">${i}</a>
+                        </li>
+                    `;
+            } else if (i === currentPage - 3 || i === currentPage + 3) {
+                paginationHTML += '<li class="page-item disabled"><span class="page-link">...</span></li>';
+            }
+        }
+
+        // Next button
+        if (currentPage < totalPages) {
+            paginationHTML += `
+                    <li class="page-item">
+                        <a class="page-link" href="#" onclick="${loadFunction.name}(${currentPage + 1}, '${currentSearchTerm}')">Next</a>
+                    </li>
+                `;
+        }
+
+        paginationHTML += '</ul></nav>';
+        container.innerHTML = paginationHTML;
+    }
+
+    async function searchPosts() {
+        const searchTerm = document.getElementById('searchInput').value.trim();
+        if (currentUser) {
+            await loadPosts(1, searchTerm);
+        } else {
+            showAlert('Please login to search posts', 'danger');
+        }
+    }
+
+    async function toggleLike(postId, button) {
+        if (!currentUser) {
+            showAlert('Please login to like posts', 'danger');
+            return;
+        }
+
+        try {
+            const data = await apiCall(`/post/${postId}/like`, { method: 'POST' });
+
+            const span = button.querySelector('span');
+            span.textContent = data.likes;
+
+            if (data.isLiked) {
+                button.classList.add('liked');
+            } else {
+                button.classList.remove('liked');
+            }
+        } catch (error) {
+            showAlert(error.message, 'danger');
+        }
+    }
+
+    async function viewPost(postId) {
+        try {
+            const data = await apiCall(`/post/${postId}`);
+            const post = data.post;
+
+            document.getElementById('postDetailsTitle').textContent = post.title;
+
+            const tags = Array.isArray(post.tags) ? post.tags : [];
+            document.getElementById('postDetailsContent').innerHTML = `
+                    <div class="row">
+                        <div class="col-md-8">
+                            ${post.contentLink ? `
+                                <div class="video-container mb-3">
+                                    <video controls style="width: 100%; border-radius: 10px;">
+                                        <source src="${post.contentLink}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                            ` : ''}
+
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="${post.userId.profilePic || 'https://via.placeholder.com/50'}"
+                                     class="profile-pic me-3" alt="Profile">
+                                <div>
+                                    <h6 class="mb-0">${post.userId.username}</h6>
+                                    <small class="text-muted">${new Date(post.createdAt).toLocaleDateString()}</small>
+                                </div>
+                            </div>
+
+                            ${post.description ? `<p class="mb-3">${post.description}</p>` : ''}
+
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                ${tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                                ${post.difficultyLevel ? `
+                                    <span class="difficulty-badge difficulty-${post.difficultyLevel}">
+                                        ${post.difficultyLevel}
+                                    </span>
+                                ` : ''}
+                            </div>
+
+                            <div class="d-flex align-items-center gap-3">
+                                <button class="btn btn-link p-0 like-btn ${post.isLiked ? 'liked' : ''}"
+                                        onclick="toggleLike('${post._id}', this)">
+                                    <i class="fas fa-heart me-1"></i>
+                                    <span>${post.likes || 0}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            currentPostId = postId;
+            loadComments(postId);
+
+            // Show comment form if user is logged in
+            const commentForm = document.getElementById('commentForm');
+            if (currentUser) {
+                commentForm.style.display = 'block';
+            } else {
+                commentForm.style.display = 'none';
+            }
+
+            new bootstrap.Modal(document.getElementById('postDetailsModal')).show();
+        } catch (error) {
+            showAlert(error.message, 'danger');
+        }
+    }
+
+    async function loadComments(postId, page = 1) {
+        try {
+            if (!currentUser) return;
+
+            const data = await apiCall(`/comment/post/${postId}?page=${page}&limit=10`);
+            const commentsContainer = document.getElementById('commentsContainer');
+
+            if (data.comments.length === 0) {
+                commentsContainer.innerHTML = `
+                        <div class="text-center py-3">
+                            <p class="text-muted">No comments yet. Be the first to comment!</p>
+                        </div>
+                    `;
+                return;
+            }
+
+            commentsContainer.innerHTML = data.comments.map(comment => `
+                    <div class="comment-item">
+                        <div class="d-flex align-items-start">
+                            <img src="${comment.user.profilePic || 'https://via.placeholder.com/40'}"
+                                 class="profile-pic me-3" style="width: 40px; height: 40px;" alt="Profile">
+                            <div class="flex-grow-1">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h6 class="mb-1">${comment.user.username}</h6>
+                                    <div>
+                                        <small class="text-muted me-2">${new Date(comment.createdAt).toLocaleDateString()}</small>
+                                        ${currentUser && (currentUser._id === comment.userId) ? `
+                                            <button class="btn btn-link btn-sm text-danger p-0" onclick="deleteComment('${comment._id}')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                                <p class="mb-0">${comment.content}</p>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+        } catch (error) {
+            console.error('Error loading comments:', error);
+        }
+    }
+
+    async function handleAddComment(e) {
+        e.preventDefault();
+        try {
+            const text = document.getElementById('commentText').value.trim();
+            if (!text) return;
+
+            await apiCall('/comment', {
+                method: 'POST',
+                body: JSON.stringify({
+                    text: text,
+                    postId: currentPostId
+                })
+            });
+
+            document.getElementById('commentText').value = '';
+            loadComments(currentPostId);
+            showAlert('Comment added!');
+        } catch (error) {
+            showAlert(error.message, 'danger');
+        }
+    }
+
+    async function deleteComment(commentId) {
+        if (!confirm('Are you sure you want to delete this comment?')) return;
+
+        try {
+            await apiCall(`/comment/${commentId}`, { method: 'DELETE' });
+            loadComments(currentPostId);
+            showAlert('Comment deleted!');
+        } catch (error) {
+            showAlert(error.message, 'danger');
+        }
+    }
+
+    // Post management functions
+    function showCreatePostModal() {
+        if (!currentUser) {
+            showAlert('Please login to create posts', 'danger');
+            return;
+        }
+
+        document.getElementById('postModalTitle').textContent = 'Create New Post';
+        document.getElementById('postForm').reset();
+        document.getElementById('postId').value = '';
+        document.getElementById('videoUploadSection').style.display = 'block';
+        new bootstrap.Modal(document.getElementById('postModal')).show();
+    }
+
+    async function handleCreatePost(e) {
+        e.preventDefault();
+        try {
+            const formData = new FormData();
+            const postId = document.getElementById('postId').value;
+
+            formData.append('title', document.getElementById('postTitle').value);
+
+            const description = document.getElementById('postDescription').value;
+            if (description) formData.append('description', description);
+
+            const tags = document.getElementById('postTags').value;
+            if (tags) formData.append('tags', tags);
+
+            const difficulty = document.getElementById('postDifficulty').value;
+            if (difficulty) formData.append('difficultyLevel', difficulty);
+
+            const videoFile = document.getElementById('postVideo').files[0];
+            if (videoFile) formData.append('video', videoFile);
+
+            let endpoint = '/post/';
+            let method = 'POST';
+
+            if (postId) {
+                // Update post - use JSON for updates (no file upload in update)
+                const updateData = {
+                    title: document.getElementById('postTitle').value
+                };
+
+                if (description) updateData.description = description;
+                if (tags) updateData.tags = tags;
+                if (difficulty) updateData.difficultyLevel = difficulty;
+
+                await apiCall(`/post/${postId}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(updateData)
+                });
+            } else {
+                // Create new post
+                const response = await fetch(`${API_BASE}${endpoint}`, {
+                    method: method,
+                    credentials: 'include',
+                    body: formData
+                });
+
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.message);
+                }
+            }
+
+            bootstrap.Modal.getInstance(document.getElementById('postModal')).hide();
+            showAlert(postId ? 'Post updated successfully!' : 'Post created successfully!');
+
+            // Reload appropriate section
+            if (document.getElementById('myPosts').classList.contains('active')) {
+                loadMyPosts();
+            } else {
+                loadPosts();
+            }
+        } catch (error) {
+            showAlert(error.message, 'danger');
+        }
+    }
+
+    async function editPost(postId) {
+        try {
+            const data = await apiCall(`/post/${postId}`);
+            const post = data.post;
+
+            document.getElementById('postModalTitle').textContent = 'Edit Post';
+            document.getElementById('postId').value = postId;
+            document.getElementById('postTitle').value = post.title;
+            document.getElementById('postDescription').value = post.description || '';
+            document.getElementById('postTags').value = Array.isArray(post.tags) ? post.tags.join(', ') : '';
+            document.getElementById('postDifficulty').value = post.difficultyLevel || '';
+            document.getElementById('videoUploadSection').style.display = 'none';
+
+            new bootstrap.Modal(document.getElementById('postModal')).show();
+        } catch (error) {
+            showAlert(error.message, 'danger');
+        }
+    }
+
+    async function deletePost(postId) {
+        if (!confirm('Are you sure you want to delete this post?')) return;
+
+        try {
+            await apiCall(`/post/${postId}`, { method: 'DELETE' });
+            showAlert('Post deleted successfully!');
+
+            // Reload appropriate section
+            if (document.getElementById('myPosts').classList.contains('active')) {
+                loadMyPosts();
+            } else {
+                loadPosts();
+            }
+        } catch (error) {
+            showAlert(error.message, 'danger');
+        }
+    }
+
+    // Report functions
+    function reportPost(postId) {
+        if (!currentUser) {
+            showAlert('Please login to report posts', 'danger');
+            return;
+        }
+
+        document.getElementById('reportPostId').value = postId;
+        document.getElementById('reportDescription').value = '';
+        new bootstrap.Modal(document.getElementById('reportModal')).show();
+    }
+
+    async function handleReportPost(e) {
+        e.preventDefault();
+        try {
+            const postId = document.getElementById('reportPostId').value;
+            const description = document.getElementById('reportDescription').value;
+
+            await apiCall('/report', {
+                method: 'POST',
+                body: JSON.stringify({
+                    postId: postId,
+                    description: description
+                })
+            });
+
+            bootstrap.Modal.getInstance(document.getElementById('reportModal')).hide();
+            showAlert('Report submitted successfully!');
+        } catch (error) {
+            showAlert(error.message, 'danger');
+        }
+    }
+</script>
+</body>
+</html>
