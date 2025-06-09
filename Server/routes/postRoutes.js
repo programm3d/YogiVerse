@@ -14,5 +14,5 @@ router.get('/user/:userId', verifyToken, postController.getUserPosts);
 router.get('/feed/all', postController.getFeed);
 router.post('/:id/like', verifyToken, postController.likePost);
 router.get('/search/all', verifyToken, postController.searchPosts);
-
+router.get("/likeCount/:id", verifyToken, postController.getLikeCount);
 module.exports = router;

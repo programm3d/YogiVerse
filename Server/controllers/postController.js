@@ -2,7 +2,7 @@ const createError = require('http-errors');
 const Post = require('../models/Post');
 const User = require('../models/User');
 const { uploadToCloudinary, deleteFromCloudinary } = require('../services/cloudinaryService');
-
+const mongoose = require('mongoose');
 const createPost = async (req, res, next) => {
     try {
         // Debug: Log the entire request body
@@ -115,10 +115,35 @@ const deletePost = async (req, res, next) => {
 };
 
 const getPost = async (req, res, next) => {
+    let postId=new mongoose.Types.ObjectId(req.params.id)
     try {
-        const post = await Post.findById(req.params.id)
-            .populate('userId', 'username profilePic')
-            .populate('likedBy', 'username profilePic');
+        const post = await Post.aggregate([
+            { $match: { _id: postId } },
+            {
+                $lookup: {
+                    from: 'users',
+                    localField: 'userId',
+                    foreignField: '_id',
+                    as: 'user'
+                }
+            },
+            { $unwind: '$user' },
+            {
+                $project: {
+                    title: 1,
+                    description: 1,
+                    contentLink: 1,
+                    tags: 1,
+                    difficultyLevel: 1,
+                    createdAt: 1,
+                    updatedAt: 1,
+                    'user._id': 1,
+                    'user.username': 1,
+                    'user.profilePic': 1,
+                    likesCount: { $size: '$likedBy' }
+                }
+            }
+        ]);
 
         if (!post) {
             throw createError(404, 'Post not found');
@@ -240,7 +265,24 @@ const searchPosts = async (req, res, next) => {
         next(err);
     }
 };
+const getLikeCount = async (req, res, next) => {
+    let postId=new mongoose.Types.ObjectId(req.params.id)
+    try {
+        let likeCount = await Post.aggregate([
+            {$match: {_id: postId}},
+            {
+                $project: {
+                    likesCount: {$size: '$likedBy'}
+                }
+            }
+        ]);
+        return res.status(200).json({likeCount});
+    }
+    catch (error) {
+        next(error);
+    }
 
+}
 module.exports = {
     createPost,
     updatePost,
@@ -249,5 +291,6 @@ module.exports = {
     getUserPosts,
     getFeed,
     likePost,
-    searchPosts
+    searchPosts,
+    getLikeCount,
 };
