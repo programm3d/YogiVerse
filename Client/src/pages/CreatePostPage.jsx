@@ -71,6 +71,7 @@ const CreatePostPage = () => {
         difficultyLevel: data.difficultyLevel,
         video: videoFile,
       };
+      console.log(formData);
 
       await postAPI.createPost(formData);
       toast.success("Post created successfully!");
@@ -121,7 +122,7 @@ const CreatePostPage = () => {
                       <Upload className="w-12 h-12 mx-auto text-gray-400 mb-4" />
                       <p className="text-gray-600">Click to upload video</p>
                       <p className="text-sm text-gray-500 mt-1">
-                        MP4, MOV up to 100MB
+                        MP4, MOV up to 30MB
                       </p>
                     </div>
                   </label>

@@ -35,7 +35,9 @@ const PostDetailPage = () => {
   const fetchPost = async () => {
     try {
       const response = await postAPI.getPost(id);
-      setPost(response.data.post);
+      // console.log(response.data.post)
+      setPost(response.data.post[0]);
+      // console.log(post)
       checkIfLiked(response.data.post);
       fetchLikeCount();
     } catch (error) {
@@ -123,7 +125,7 @@ const PostDetailPage = () => {
   if (loading) return <LoadingSpinner />;
   if (!post) return null;
 
-  const isOwner = user && post.userId._id === user._id;
+  const isOwner = user && post.user._id === user._id;
   const canDelete = isOwner || isAdmin;
 
   return (
@@ -156,10 +158,10 @@ const PostDetailPage = () => {
                 {/* User Info */}
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
-                    {post.userId.profilePic ? (
+                    {post.user.profilePic ? (
                       <img
-                        src={post.userId.profilePic}
-                        alt={post.userId.username}
+                        src={post.user.profilePic}
+                        alt={post.user.username}
                         className="w-12 h-12 rounded-full"
                       />
                     ) : (
@@ -168,7 +170,7 @@ const PostDetailPage = () => {
                       </div>
                     )}
                     <div>
-                      <p className="font-semibold">{post.userId.username}</p>
+                      <p className="font-semibold">{post.user.username}</p>
                       <p className="text-sm text-gray-500 flex items-center gap-1">
                         <Clock className="w-4 h-4" />
                         {formatDate(post.createdAt)}

@@ -57,7 +57,7 @@ const getPostComments = async (req, res, next) => {
             { $unwind: '$user' },
             {
                 $project: {
-                    content: 1,
+                    text: 1,
                     createdAt: 1,
                     userId: 1,
                     'user.username': 1,

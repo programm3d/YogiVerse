@@ -6,7 +6,6 @@
 ## Features
 - **User Authentication:** Secure sign-up and log-in features for users.
 - **Content Sharing:** Users can share videos, articles, and tips related to yoga and mindfulness.
-- **Leaderboard:** A leaderboard that ranks posts based on user engagement.
 - **Post Management:** Users can create, edit, and delete their own posts.
 - **Community Engagement:** Users can interact with each other's content and provide feedback.
 
@@ -30,7 +29,7 @@
     ```
 2. Navigate to the project directory:
     ```bash
-    cd yoga-frontend
+    cd Client
     ```
 3. Install the dependencies:
     ```bash
@@ -42,10 +41,14 @@
 #### Backend
 1. Navigate to the `server` directory:
     ```bash
-    cd yoga
+    cd Server
     ```
 2. Create a `.env` file and add your environment variables (e.g., MongoDB connection string, JWT secret).
-3. Start the backend server:
+3. Install the dependencies:
+    ```bash
+    npm install
+    ```
+4. Start the backend server:
     ```bash
     node app.js
     ```
@@ -53,7 +56,7 @@
 #### Frontend
 1. Navigate to the `client` directory:
     ```bash
-    cd yoga-frontend
+    cd Client
     ```
 2. Start the frontend development server:
     ```bash
@@ -72,8 +75,8 @@ We welcome contributions! If you'd like to contribute, please fork the repositor
 - Our mentors and peers for their support and guidance.
 
 ## Live On:
-[Server](https://yogiverse.onrender.com/yoga)
-[Client](https://yogiverse-1.onrender.com)
+[Server](https://yogiverse.onrender.com)
+[Client](https://yogiverse-app.netlify.app/)
 
 ---
 

@@ -68,7 +68,7 @@ export const postAPI = {
     if (data.difficultyLevel)
       formData.append("difficultyLevel", data.difficultyLevel);
     if (data.video) formData.append("video", data.video);
-    return api.post("/post", formData, {
+    return api.post("/post/", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
   },
@@ -84,7 +84,7 @@ export const postAPI = {
 
 // Comment APIs
 export const commentAPI = {
-  createComment: (data) => api.post("/comment", data),
+  createComment: (data) => api.post("/comment/", data),
   getPostComments: (postId, params) =>
     api.get(`/comment/post/${postId}`, { params }),
   deleteComment: (id) => api.delete(`/comment/${id}`),

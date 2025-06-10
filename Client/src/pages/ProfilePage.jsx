@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Camera, User, Mail, Calendar, Film, Heart, Edit2 } from 'lucide-react';
-import { userAPI, postAPI } from '../services/api';
-import { useAuth } from '../contexts/AuthContext';
-import PostCard from '../components/posts/PostCard';
-import LoadingSpinner from '../components/common/LoadingSpinner';
-import toast from 'react-hot-toast';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Camera, User, Mail, Calendar, Film, Heart, Edit2 } from "lucide-react";
+import { userAPI, postAPI } from "../services/api";
+import { useAuth } from "../contexts/AuthContext";
+import PostCard from "../components/posts/PostCard";
+import LoadingSpinner from "../components/common/LoadingSpinner";
+import toast from "react-hot-toast";
 
 const ProfilePage = () => {
   const { user, checkAuth } = useAuth();
@@ -14,16 +15,17 @@ const ProfilePage = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isEditingProfile, setIsEditingProfile] = useState(false);
-  const [profileData, setProfileData] = useState({ name: '' });
+  const [profileData, setProfileData] = useState({ name: "" });
   const [profilePic, setProfilePic] = useState(null);
   const [stats, setStats] = useState({ posts: 0, likes: 0 });
 
   useEffect(() => {
     if (user) {
       fetchUserPosts();
-      setProfileData({ name: user.name || '' });
+      setProfileData({ name: user.username || "" });
+      // console.log(user);
     }
-  }, [user, page]);
+  }, [page]);
 
   const fetchUserPosts = async () => {
     setLoading(true);
@@ -31,9 +33,9 @@ const ProfilePage = () => {
       const response = await postAPI.getUserPosts(user._id, { page, limit: 9 });
       setUserPosts(response.data.posts);
       setTotalPages(response.data.totalPages);
-      setStats(prev => ({ ...prev, posts: response.data.posts.length }));
+      setStats((prev) => ({ ...prev, posts: response.data.posts.length }));
     } catch (error) {
-      toast.error('Failed to load posts');
+      toast.error("Failed to load posts");
     } finally {
       setLoading(false);
     }
@@ -42,7 +44,7 @@ const ProfilePage = () => {
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
     const formData = { name: profileData.name };
-    
+
     if (profilePic) {
       formData.profilePic = profilePic;
     }
@@ -51,9 +53,9 @@ const ProfilePage = () => {
       await userAPI.updateProfile(formData);
       await checkAuth();
       setIsEditingProfile(false);
-      toast.success('Profile updated successfully');
+      toast.success("Profile updated successfully");
     } catch (error) {
-      toast.error('Failed to update profile');
+      toast.error("Failed to update profile");
     }
   };
 
@@ -61,7 +63,7 @@ const ProfilePage = () => {
     const file = e.target.files[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
-        toast.error('Image size must be less than 5MB');
+        toast.error("Image size must be less than 5MB");
         return;
       }
       setProfilePic(file);
@@ -69,22 +71,24 @@ const ProfilePage = () => {
   };
 
   const handleRemoveProfilePic = async () => {
-    if (window.confirm('Are you sure you want to remove your profile picture?')) {
+    if (
+      window.confirm("Are you sure you want to remove your profile picture?")
+    ) {
       try {
         await userAPI.deleteProfilePic();
         await checkAuth();
-        toast.success('Profile picture removed');
+        toast.success("Profile picture removed");
       } catch (error) {
-        toast.error('Failed to remove profile picture');
+        toast.error("Failed to remove profile picture");
       }
     }
   };
 
   const formatDate = (date) => {
-    return new Date(date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    return new Date(date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
@@ -136,15 +140,18 @@ const ProfilePage = () => {
             <div className="flex-1 text-center sm:text-left">
               {isEditingProfile ? (
                 <form onSubmit={handleProfileUpdate}>
-                  <input
+                  {/* <input
                     type="text"
                     value={profileData.name}
                     onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
                     placeholder="Your name"
                     className="text-2xl font-bold mb-2 px-3 py-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yoga-purple focus:border-transparent"
-                  />
+                  /> */}
                   <div className="flex gap-2 mt-4">
-                    <button type="submit" className="btn-primary px-4 py-2 text-sm">
+                    <button
+                      type="submit"
+                      className="btn-primary px-4 py-2 text-sm"
+                    >
                       Save
                     </button>
                     <button
@@ -167,7 +174,9 @@ const ProfilePage = () => {
                 </form>
               ) : (
                 <>
-                  <h1 className="text-3xl font-bold mb-2">{user?.name || user?.username}</h1>
+                  <h1 className="text-3xl font-bold mb-2">
+                    {user?.name || user?.username}
+                  </h1>
                   <p className="text-gray-600 mb-4">@{user?.username}</p>
                   <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-4">
                     <div className="flex items-center gap-1">
@@ -217,13 +226,15 @@ const ProfilePage = () => {
           transition={{ delay: 0.2 }}
         >
           <h2 className="text-2xl font-bold mb-6">My Posts</h2>
-          
+
           {loading ? (
             <LoadingSpinner />
           ) : userPosts.length === 0 ? (
             <div className="text-center py-12 bg-white rounded-xl shadow-lg">
               <Film className="w-16 h-16 mx-auto text-gray-400 mb-4" />
-              <p className="text-gray-500 text-lg">You haven't created any posts yet</p>
+              <p className="text-gray-500 text-lg">
+                You haven't created any posts yet
+              </p>
               <Link to="/create-post" className="btn-primary inline-block mt-4">
                 Create Your First Post
               </Link>

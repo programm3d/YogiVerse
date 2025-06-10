@@ -24,6 +24,7 @@ const CommentSection = ({ postId }) => {
         page,
         limit: 10,
       });
+      // console.log(response.data)
       setComments(response.data.comments);
       setTotalPages(response.data.totalPages);
     } catch (error) {
@@ -171,7 +172,7 @@ const CommentSection = ({ postId }) => {
                         {formatDate(comment.createdAt)}
                       </span>
                     </div>
-                    <p className="text-gray-700">{comment.content}</p>
+                    <p className="text-gray-700">{comment.text}</p>
                   </div>
                   {user && (comment.userId === user._id || isAdmin) && (
                     <button

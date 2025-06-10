@@ -32,7 +32,7 @@ const updateProfile = async (req, res, next) => {
         }
 
         // Update other fields
-        user.name = req.body.name || user.name;
+        // user.name = req.body.name || user.name;
 
         await user.save();
 
