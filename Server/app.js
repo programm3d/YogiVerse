@@ -28,7 +28,7 @@ connectDB(DB_URL);
 // Security middleware
 app.use(helmet());
 app.use(cors({
-    origin: ['https://yogiverse-app.netlify.app/','http://localhost:5173'],
+    origin: ['https://yogiverse-app.netlify.app','http://localhost:5173'],
     credentials: true
 }));
 // app.use(cors());
