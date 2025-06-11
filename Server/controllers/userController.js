@@ -93,15 +93,13 @@ const getAllUsers = async (req, res, next) => {
 
 const blockUser = async (req, res, next) => {
     try {
-        const user = await User.findByIdAndUpdate(
-            req.params.id,
-            { status: 'blocked' },
-            { new: true }
-        ).select('-password');
+        const user = await User.findById(req.params.id).select('-password');
 
         if (!user) {
             throw createError(404, 'User not found');
         }
+        user.status=user.status=="blocked"?"active":'blocked'
+        await user.save();
 
         res.status(200).json({ success: true, user });
     } catch (err) {
