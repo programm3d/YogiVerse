@@ -78,6 +78,7 @@ const CreatePostPage = () => {
       navigate("/feed");
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to create post");
+      // console.log(error.response?.data?.message);
     } finally {
       setIsLoading(false);
     }
@@ -194,9 +195,9 @@ const CreatePostPage = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yoga-purple focus:border-transparent"
               >
                 <option value="">Select difficulty</option>
-                <option value="beginner">Beginner</option>
-                <option value="intermediate">Intermediate</option>
-                <option value="advanced">Advanced</option>
+                <option value="Low">Beginner</option>
+                <option value="Medium">Intermediate</option>
+                <option value="Advance">Advance</option>
               </select>
             </div>
 
